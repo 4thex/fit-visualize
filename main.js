@@ -8,15 +8,15 @@ let progressDiv = document.querySelector("#progress");
 testBtn.addEventListener("click", () => {
   graph = Graph([
     {
-      time: Date.parse("2020-07-22T19:56:00-0400"),
+      time: new Date("2020-07-22T19:56:00-0400"),
       elev: 105
     },
     {
-      time: Date.parse("2020-07-22T19:56:10-0400"),
+      time: new Date("2020-07-22T19:56:10-0400"),
       elev: 56
     },
     {
-      time: Date.parse("2020-07-22T19:56:20-0400"),
+      time: new Date("2020-07-22T19:56:20-0400"),
       elev: 255
     },
   ]);

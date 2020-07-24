@@ -30,9 +30,11 @@ let Graph = data => {
 
   let domainY = [
     data.reduce((acc, item) => {
+      if(isNaN(item.elev)) return acc;
       return Math.min(acc, item.elev);
     }, 1E5),
     data.reduce((acc, item) => {
+      if(isNaN(item.elev)) return acc;
       return Math.max(acc, item.elev);
     }, -1E5)
   ];
@@ -43,11 +45,12 @@ let Graph = data => {
     .call(y_axis);
 
   let line = d3.line()
-    .x(d => { return x(d.time); })
-    .y(d => { return y(d.elev); });
+    .defined(d => !isNaN(d.elev))
+    .x(d => x(d.time.getTime()))
+    .y(d => y(d.elev));
   svg.append("path")
-        .data(data)
-        .attr("class", "line")
-        .attr("d", line);
+    .data([data])
+    .attr("class", "line")
+    .attr("d", line);
 };
 export { Graph };
