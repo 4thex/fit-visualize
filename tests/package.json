@@ -1,0 +1,17 @@
+{
+  "name": "tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "qunit"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "qunit": "^2.10.1"
+  },
+  "dependencies": {
+    "d3": "^5.16.0"
+  }
+}
