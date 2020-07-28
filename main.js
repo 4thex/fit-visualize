@@ -1,25 +1,13 @@
 import { Espruino } from "./espruino.js";
 import { Graph } from "./graph.js";
+import { Data } from "./tests/data/gps-data.js";
 let graph;
 let espruino = Espruino();
 let connectBtn = document.querySelector("#connectBtn");
 let testBtn = document.querySelector("#testBtn");
 let progressDiv = document.querySelector("#progress");
 testBtn.addEventListener("click", () => {
-  graph = Graph([
-    {
-      time: new Date("2020-07-22T19:56:00-0400"),
-      elev: 105
-    },
-    {
-      time: new Date("2020-07-22T19:56:10-0400"),
-      elev: 56
-    },
-    {
-      time: new Date("2020-07-22T19:56:20-0400"),
-      elev: 255
-    },
-  ]);
+  let graph = Graph(Data());
 });
 connectBtn.addEventListener("click", () => {
   espruino.connect()
