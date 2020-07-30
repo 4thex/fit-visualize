@@ -13,6 +13,15 @@ let Graph = data => {
     .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
+  data.forEach(d => {
+    d.time = d.time.getTime();
+  });
+  data = data.filter(d => {
+    if(d.time === undefined || isNaN(d.time)) return false;
+    if(isNaN(d.elev)) return false;
+    
+    return true;
+  });
   let domainX = [
     data.reduce((acc, item) => {
       return Math.min(acc, item.time);
@@ -22,8 +31,8 @@ let Graph = data => {
     }, new Date(-1E15))
   ];
   let x = d3.scaleTime().range([0, width]);
-  let scaleX = x.domain(domainX);
-  let x_axis = d3.axisBottom().scale(scaleX);
+  x.domain(domainX);
+  let x_axis = d3.axisBottom(x);
   svg.append("g")
     .attr("transform", "translate(0," + height + ")")
     .call(x_axis);
@@ -60,22 +69,21 @@ let Graph = data => {
     }, -1E5)
   ];
   let y = d3.scaleLinear().range([height, 0]);
-  let scaleYElev = y.domain(domainYElev);
-  let y_axisElev = d3.axisLeft().scale(scaleYElev);
+  y.domain(domainYElev);
+  let y_axisElev = d3.axisLeft(y);
   svg.append("g")
     .call(y_axisElev);
 
   let i = 0;
   let line = d3.line()
-    .defined(d => !isNaN(d.elev) && !isNaN(d.incline))
     .x(d => {
       console.log(d.time);
-      x(d.time.getTime());
+      x(d.time);
     })
-    .y(d => y(d.delta));
+    .y(d => y(d.incline));
   svg.append("path")
-    .data([data])
+    // .data([data])
     .attr("class", "line")
-    .attr("d", line);
+    .attr("d", line(data));
 };
 export { Graph };
